@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>608</width>
-    <height>422</height>
+    <width>363</width>
+    <height>289</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,47 +15,33 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QWidget" name="widget_2" native="true">
+    <widget class="QWidget" name="controlsBox" native="true">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QPushButton" name="assignment1Btn">
+       <widget class="QLabel" name="label">
         <property name="text">
-         <string>Assignment 1</string>
+         <string>Alien Claw Game</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="assignment2Btn">
+       <widget class="QPushButton" name="spawnButton">
         <property name="text">
-         <string>Assignment 2</string>
+         <string>Spawn Aliens!</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="assignment3Btn">
-        <property name="text">
-         <string>Assignment 3</string>
+       <widget class="Line" name="line">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="assignment4Btn">
+       <widget class="QPushButton" name="homeBtn">
         <property name="text">
-         <string>Assignment 4</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="colorChangeButton">
-        <property name="text">
-         <string>ColorChange</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="finalProjButton">
-        <property name="text">
-         <string>Alien</string>
+         <string>Return Home</string>
         </property>
        </widget>
       </item>
@@ -76,13 +62,30 @@
     </widget>
    </item>
    <item>
+    <layout class="QFormLayout" name="formLayout">
+     <property name="fieldGrowthPolicy">
+      <enum>QFormLayout::FieldsStayAtSizeHint</enum>
+     </property>
+     <item row="0" column="0">
+      <widget class="QLabel" name="numAlienLabel">
+       <property name="text">
+        <string>Number of Aliens</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QSpinBox" name="numAliensSpinBox"/>
+     </item>
+    </layout>
+   </item>
+   <item>
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>438</width>
+       <width>439</width>
        <height>20</height>
       </size>
      </property>
@@ -91,5 +94,22 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>spawnButton</sender>
+   <signal>clicked()</signal>
+   <receiver>spawnButton</receiver>
+   <slot>toggle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>98</x>
+     <y>67</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>60</x>
+     <y>55</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
