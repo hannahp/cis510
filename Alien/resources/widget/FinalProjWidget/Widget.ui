@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>363</width>
-    <height>289</height>
+    <width>539</width>
+    <height>295</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,11 +25,38 @@
        </widget>
       </item>
       <item>
+       <layout class="QFormLayout" name="formLayout_2">
+        <item row="0" column="0">
+         <widget class="QLabel" name="numAlienLabel">
+          <property name="text">
+           <string>Number of Aliens</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QSpinBox" name="numAliensSpinBox"/>
+        </item>
+       </layout>
+      </item>
+      <item>
        <widget class="QPushButton" name="spawnButton">
         <property name="text">
          <string>Spawn Aliens!</string>
         </property>
        </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>130</height>
+         </size>
+        </property>
+       </spacer>
       </item>
       <item>
        <widget class="Line" name="line">
@@ -45,51 +72,68 @@
         </property>
        </widget>
       </item>
-      <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
      </layout>
     </widget>
    </item>
    <item>
-    <layout class="QFormLayout" name="formLayout">
-     <property name="fieldGrowthPolicy">
-      <enum>QFormLayout::FieldsStayAtSizeHint</enum>
-     </property>
-     <item row="0" column="0">
-      <widget class="QLabel" name="numAlienLabel">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="1" column="1">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="1">
+        <widget class="QSlider" name="clawHorizSlide">
+         <property name="minimum">
+          <number>-270</number>
+         </property>
+         <property name="maximum">
+          <number>384</number>
+         </property>
+         <property name="sliderPosition">
+          <number>-270</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QSlider" name="clawVertSlide">
+         <property name="minimum">
+          <number>-327</number>
+         </property>
+         <property name="maximum">
+          <number>348</number>
+         </property>
+         <property name="sliderPosition">
+          <number>-327</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="dropButton">
        <property name="text">
-        <string>Number of Aliens</string>
+        <string>Drop Claw!</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QSpinBox" name="numAliensSpinBox"/>
-     </item>
     </layout>
-   </item>
-   <item>
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>439</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>
