@@ -26,6 +26,7 @@ class MayaPyHomeWidget(PyGlassWidget):
         self.assignment2Btn.clicked.connect(self._handleAssignment2)
         self.assignment3Btn.clicked.connect(self._handleAssignment3)
         self.assignment4Btn.clicked.connect(self._handleAssignment4)
+        self.assignment5Btn.clicked.connect(self._handleAssignment5)
         self.colorChangeButton.clicked.connect(self._handleColorChange)
         self.finalProjButton.clicked.connect(self._handleFinalProj)
 
@@ -62,6 +63,9 @@ class MayaPyHomeWidget(PyGlassWidget):
 #___________________________________________________________________________________________________ _handleAssignment3
     def _handleAssignment4(self):
         self.mainWindow.setActiveWidget('assignment4')
+#___________________________________________________________________________________________________ _handleAssignment3
+    def _handleAssignment5(self):
+        self.mainWindow.setActiveWidget('assignment5')
 #___________________________________________________________________________________________________ _handleAssignment3
     def _handleFinalProj(self):
         self.mainWindow.setActiveWidget('finalProj')

@@ -46,6 +46,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="assignment5Btn">
+        <property name="text">
+         <string>Assignment 5</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="colorChangeButton">
         <property name="text">
          <string>ColorChange</string>
