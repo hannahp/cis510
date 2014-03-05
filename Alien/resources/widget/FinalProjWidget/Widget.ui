@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>539</width>
+    <width>544</width>
     <height>295</height>
    </rect>
   </property>
@@ -76,21 +76,33 @@
     </widget>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <item>
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="1" column="0">
       <layout class="QGridLayout" name="gridLayout">
        <item row="1" column="1">
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <item row="2" column="0">
+          <widget class="QPushButton" name="dropButton">
+           <property name="text">
+            <string>Drop Claw!</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QPushButton" name="keyClawPos">
+           <property name="text">
+            <string>Key Claw Position</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QPushButton" name="releaseButton">
+           <property name="text">
+            <string>Release Claw</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item row="0" column="1">
         <widget class="QSlider" name="clawHorizSlide">
@@ -125,13 +137,6 @@
         </widget>
        </item>
       </layout>
-     </item>
-     <item>
-      <widget class="QPushButton" name="dropButton">
-       <property name="text">
-        <string>Drop Claw!</string>
-       </property>
-      </widget>
      </item>
     </layout>
    </item>

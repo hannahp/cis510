@@ -22,7 +22,12 @@ class FinalProjWidget(PyGlassWidget):
         self.homeBtn.clicked.connect(self._handleReturnHome)
         self.spawnButton.clicked.connect(self._handleSpawn)
         self.dropButton.clicked.connect(self._handleDropClaw)
+        self.releaseButton.clicked.connect(self._handleReleaseClaw)
+        self.clawHorizSlide.valueChanged.connect(self._handleHorizMove)
+        self.clawVertSlide.valueChanged.connect(self._handleDepthMove)
 
+        #---Key buttons-----
+        self.keyClawPos.clicked.connect(self._handleKeyClawPos)
 
 
 #===================================================================================================
@@ -36,6 +41,33 @@ class FinalProjWidget(PyGlassWidget):
     def _handleSpawn(self):
         numAliens = self.numAliensSpinBox.value()
         SpawnAliens.spawnAliens(numAliens)
+#___________________________________________________________________________________________________
+    #------Move the claw L/R
+    def _handleHorizMove(self):
+        horizPos = self.clawHorizSlide.value()
+        cmds.setAttr('claw.translateX', horizPos)
+#___________________________________________________________________________________________________
+    #------Move the claw forward/back
+    def _handleDepthMove(self):
+        vertPos = self.clawVertSlide.value()
+        cmds.setAttr('claw.translateZ', vertPos)
+#___________________________________________________________________________________________________
+    #------Move the claw forward/back
+    def _handleReleaseClaw(self):
+        #Get the current time
+        lastKeyTime = cmds.currentTime(query=True)
+
+        #---Keyframe claw opening----
+        #---Loop over the 3 claw fingers
+        for i in range (1,4):
+            #---current finger we are looking at
+            fingerName = 'clawFinger'+str(i)
+            #---initial keyframe
+            cmds.setKeyframe('claw|'+fingerName+'Realign|'+fingerName, attribute='rotateZ', t=lastKeyTime)
+            #----After 1.5 seconds, rotate finger to -110 Z
+            cmds.setKeyframe('claw|'+fingerName+'Realign|'+fingerName, attribute='rotateZ', t=lastKeyTime+36, v=-110)
+
+
 #___________________________________________________________________________________________________ _handleDrop Claw
     #------drop the claw
     def _handleDropClaw(self):
@@ -69,3 +101,20 @@ class FinalProjWidget(PyGlassWidget):
         #--raise it back to the start position of Y
         cmds.setKeyframe('claw', attribute='translateY', t=lastKeyTime+72, v=345)
 
+#----------------------------------------------
+#------Key button handlers---------------------
+#----------------------------------------------
+
+#___________________________________________________________________________________________________
+    #-------Key horiz pos
+    def keyHoriz(self):
+        cmds.setKeyframe('claw', attribute='translateX')
+#___________________________________________________________________________________________________
+    #-------Key horiz pos
+    def keyDepth(self):
+        cmds.setKeyframe('claw', attribute='translateZ')
+#___________________________________________________________________________________________________
+    #-------Key horiz pos
+    def _handleKeyClawPos(self):
+        self.keyHoriz()
+        self.keyDepth()
