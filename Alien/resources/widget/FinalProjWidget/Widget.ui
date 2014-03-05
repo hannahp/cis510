@@ -129,10 +129,16 @@
           <number>348</number>
          </property>
          <property name="sliderPosition">
-          <number>-327</number>
+          <number>348</number>
          </property>
          <property name="orientation">
           <enum>Qt::Vertical</enum>
+         </property>
+         <property name="invertedAppearance">
+          <bool>true</bool>
+         </property>
+         <property name="invertedControls">
+          <bool>false</bool>
          </property>
         </widget>
        </item>

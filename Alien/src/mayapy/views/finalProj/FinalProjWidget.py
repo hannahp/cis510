@@ -67,15 +67,27 @@ class FinalProjWidget(PyGlassWidget):
             #----After 1.5 seconds, rotate finger to -110 Z
             cmds.setKeyframe('claw|'+fingerName+'Realign|'+fingerName, attribute='rotateZ', t=lastKeyTime+36, v=-110)
 
+        lastKeyTime = lastKeyTime+36
 
+        #----PARENT the alien to the claw.
+        selectedAlien = cmds.ls(selection=True)[0]
+
+        #-----get the constraint node name
+        transform = selectedAlien
+        constraintNode = cmds.listConnections('%s.rotateOrder' % transform, source=True)[0]
+        if not cmds.nodeType(constraintNode) == 'parentConstraint':
+            raise RuntimeError('Node %s is not of type constraint' % constraintNode)
+        cmds.setKeyframe(constraintNode+".clawBaseW0", t=lastKeyTime, v=1)
+        cmds.setKeyframe(constraintNode+".clawBaseW0", t=lastKeyTime+1, v=0)
 #___________________________________________________________________________________________________ _handleDrop Claw
     #------drop the claw
     def _handleDropClaw(self):
         #Get the current time
         lastKeyTime = cmds.currentTime(query=True)
+        print lastKeyTime
 
         #Set initial status keyframe
-        cmds.setKeyframe('claw', attribute='translateY')
+        cmds.setKeyframe('claw', attribute='translateY', t=lastKeyTime)
         #----set keyframe for dropped claw
         cmds.setKeyframe('claw', attribute='translateY', t=lastKeyTime+72, v=20)
 
@@ -94,6 +106,18 @@ class FinalProjWidget(PyGlassWidget):
 
         #--last keyframe was at lastKey+36
         lastKeyTime = lastKeyTime+36
+
+        #----PARENT the alien to the claw.
+        selectedAlien = cmds.ls(selection=True)[0]
+
+        #-----get the constraint node name
+        transform = selectedAlien
+        constraintNode = cmds.listConnections('%s.rotateOrder' % transform, source=True)[0]
+        if not cmds.nodeType(constraintNode) == 'parentConstraint':
+            raise RuntimeError('Node %s is not of type constraint' % constraintNode)
+        cmds.setKeyframe(constraintNode+".clawBaseW0", t=lastKeyTime, v=0)
+        cmds.setKeyframe(constraintNode+".clawBaseW0", t=lastKeyTime+1, v=1)
+
 
         #-----Raise the claw----------
         #Set initial status keyframe

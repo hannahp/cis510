@@ -21,7 +21,7 @@ def spawnAliens(num_aliens):
     print gravName
     if gravName == []:
         print "make grav"
-        cmds.gravity(n="alienGrav", pos = (0, 0, 0), m=30.396, att=0, dx=0, dy=-1, dz=0, mxd=-1, vsh="none", vex=0, vof=(0, 0, 0), vsw=360, tsr=0.5)
+        cmds.gravity(n="alienGrav", pos = (0, 0, 0), m=980, att=0, dx=0, dy=-1, dz=0, mxd=-1, vsh="none", vex=0, vof=(0, 0, 0), vsw=360, tsr=0.5)
 
     for i in range(0, num_aliens):
 
