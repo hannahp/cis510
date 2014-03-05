@@ -87,9 +87,11 @@ class FinalProjWidget(PyGlassWidget):
         print lastKeyTime
 
         #Set initial status keyframe
-        cmds.setKeyframe('claw', attribute='translateY', t=lastKeyTime)
+        cmds.setKeyframe('claw', attribute='translateY', t=lastKeyTime, v=345)
         #----set keyframe for dropped claw
-        cmds.setKeyframe('claw', attribute='translateY', t=lastKeyTime+72, v=20)
+        cmds.setAttr('claw.translateY', 20)
+        cmds.setKeyframe('claw', attribute='translateY', t=lastKeyTime+72)
+
 
         #---change curTime to be time at last keyframe
         lastKeyTime = lastKeyTime+72
@@ -109,6 +111,10 @@ class FinalProjWidget(PyGlassWidget):
 
         #----PARENT the alien to the claw.
         selectedAlien = cmds.ls(selection=True)[0]
+        cmds.parentConstraint('clawBase', selectedAlien, mo=True)
+
+        #---move the claw back, as we want it to start at the top. This was just for parenting purposes
+        cmds.setAttr('claw.translateY', 345)
 
         #-----get the constraint node name
         transform = selectedAlien
@@ -117,6 +123,9 @@ class FinalProjWidget(PyGlassWidget):
             raise RuntimeError('Node %s is not of type constraint' % constraintNode)
         cmds.setKeyframe(constraintNode+".clawBaseW0", t=lastKeyTime, v=0)
         cmds.setKeyframe(constraintNode+".clawBaseW0", t=lastKeyTime+1, v=1)
+        cmds.setAttr(constraintNode+".clawBaseW0", 0)
+
+        lastKeyTime = lastKeyTime+1
 
 
         #-----Raise the claw----------
