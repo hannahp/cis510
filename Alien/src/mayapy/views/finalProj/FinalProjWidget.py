@@ -82,57 +82,68 @@ class FinalProjWidget(PyGlassWidget):
 #___________________________________________________________________________________________________ _handleDrop Claw
     #------drop the claw
     def _handleDropClaw(self):
-        #Get the current time
-        lastKeyTime = cmds.currentTime(query=True)
-        print lastKeyTime
 
-        #Set initial status keyframe
-        cmds.setKeyframe('claw', attribute='translateY', t=lastKeyTime, v=345)
-        #----set keyframe for dropped claw
-        cmds.setAttr('claw.translateY', 20)
-        cmds.setKeyframe('claw', attribute='translateY', t=lastKeyTime+72)
+        #-----------------------------------
+        #-----CHECK IF ALIEN IS SELECTED----
+        #-----------------------------------
+        selItems = cmds.ls('alien*', selection=True)
+        if selItems==[]:
+            print "Please select an alien to pick up"
+            return
+        else:
 
+            #Get the current time
+            lastKeyTime = cmds.currentTime(query=True)
+            print lastKeyTime
 
-        #---change curTime to be time at last keyframe
-        lastKeyTime = lastKeyTime+72
-
-        #---Keyframe claw closing----
-        #---Loop over the 3 claw fingers
-        for i in range (1,4):
-            #---current finger we are looking at
-            fingerName = 'clawFinger'+str(i)
-            #---initial keyframe
-            cmds.setKeyframe('claw|'+fingerName+'Realign|'+fingerName, attribute='rotateZ', t=lastKeyTime)
-            #----After 1.5 seconds, rotate finger to -70 Z
-            cmds.setKeyframe('claw|'+fingerName+'Realign|'+fingerName, attribute='rotateZ', t=lastKeyTime+36, v=-70)
-
-        #--last keyframe was at lastKey+36
-        lastKeyTime = lastKeyTime+36
-
-        #----PARENT the alien to the claw.
-        selectedAlien = cmds.ls(selection=True)[0]
-        cmds.parentConstraint('clawBase', selectedAlien, mo=True)
-
-        #---move the claw back, as we want it to start at the top. This was just for parenting purposes
-        cmds.setAttr('claw.translateY', 345)
-
-        #-----get the constraint node name
-        transform = selectedAlien
-        constraintNode = cmds.listConnections('%s.rotateOrder' % transform, source=True)[0]
-        if not cmds.nodeType(constraintNode) == 'parentConstraint':
-            raise RuntimeError('Node %s is not of type constraint' % constraintNode)
-        cmds.setKeyframe(constraintNode+".clawBaseW0", t=lastKeyTime, v=0)
-        cmds.setKeyframe(constraintNode+".clawBaseW0", t=lastKeyTime+1, v=1)
-        cmds.setAttr(constraintNode+".clawBaseW0", 0)
-
-        lastKeyTime = lastKeyTime+1
+            #Set initial status keyframe
+            cmds.setKeyframe('claw', attribute='translateY', t=lastKeyTime, v=345)
+            #-----Move the claw down so the parenting looks realistic
+            cmds.setAttr('claw.translateY', 20)
+            #----set keyframe for dropped claw
+            cmds.setKeyframe('claw', attribute='translateY', t=lastKeyTime+72)
 
 
-        #-----Raise the claw----------
-        #Set initial status keyframe
-        cmds.setKeyframe('claw', attribute='translateY', t=lastKeyTime, v=20)
-        #--raise it back to the start position of Y
-        cmds.setKeyframe('claw', attribute='translateY', t=lastKeyTime+72, v=345)
+            #---change curTime to be time at last keyframe
+            lastKeyTime = lastKeyTime+72
+
+            #---Keyframe claw closing----
+            #---Loop over the 3 claw fingers
+            for i in range (1,4):
+                #---current finger we are looking at
+                fingerName = 'clawFinger'+str(i)
+                #---initial keyframe
+                cmds.setKeyframe('claw|'+fingerName+'Realign|'+fingerName, attribute='rotateZ', t=lastKeyTime)
+                #----After 1.5 seconds, rotate finger to -70 Z
+                cmds.setKeyframe('claw|'+fingerName+'Realign|'+fingerName, attribute='rotateZ', t=lastKeyTime+36, v=-70)
+
+            #--last keyframe was at lastKey+36
+            lastKeyTime = lastKeyTime+36
+
+            #----PARENT the alien to the claw.
+            selectedAlien = cmds.ls(selection=True)[0]
+            cmds.parentConstraint('clawBase', selectedAlien, mo=True)
+
+            #---move the claw back, as we want it to start at the top. This was just for parenting purposes
+            cmds.setAttr('claw.translateY', 345)
+
+            #-----get the constraint node name
+            transform = selectedAlien
+            constraintNode = cmds.listConnections('%s.rotateOrder' % transform, source=True)[0]
+            if not cmds.nodeType(constraintNode) == 'parentConstraint':
+                raise RuntimeError('Node %s is not of type constraint' % constraintNode)
+            cmds.setKeyframe(constraintNode+".clawBaseW0", t=lastKeyTime, v=0)
+            cmds.setKeyframe(constraintNode+".clawBaseW0", t=lastKeyTime+1, v=1)
+            #---Make sure we start with this constraint off
+            cmds.setAttr(constraintNode+".clawBaseW0", 0)
+
+            lastKeyTime = lastKeyTime+1
+
+            #-----Raise the claw----------
+            #Set initial status keyframe
+            cmds.setKeyframe('claw', attribute='translateY', t=lastKeyTime, v=20)
+            #--raise it back to the start position of Y
+            cmds.setKeyframe('claw', attribute='translateY', t=lastKeyTime+72, v=345)
 
 #----------------------------------------------
 #------Key button handlers---------------------
