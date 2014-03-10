@@ -167,7 +167,7 @@ class FinalProjWidget(PyGlassWidget):
             #----PARENT the alien to the claw.
             cmds.parentConstraint('clawBase', selectedAlien, mo=True)
             #----PARENT the alien to the locator.
-            cmds.parentConstraint(alienLoc, selectedAlien, mo=True)
+            cmds.parentConstraint(alienLoc, selectedAlien)
 
             #---move the claw back, as we want it to start at the top. This was just for parenting purposes
             cmds.setAttr('claw.translateY', 345)
