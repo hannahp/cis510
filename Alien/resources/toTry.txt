@@ -1,0 +1,7 @@
+1. Create locator where alien is on ground
+2. parent to locator
+3. parent alien to claw when it comes down
+4. move the locator up with the alien
+5. Key the swap of weights
+6. Key the blend parent
+7. key the active state
