@@ -76,7 +76,7 @@ class FinalProjWidget(PyGlassWidget):
         #-------Get the alien selected
         selectedAlien = cmds.ls(selection=True)[0]
         #------Get the alien's rigidBody name
-        selRB = cmds.listRelatives(selectedAlien, s=True)[0]
+        #selRB = cmds.listRelatives(selectedAlien, s=True)[0]
 
 
         #-----get the constraint node name
@@ -99,8 +99,8 @@ class FinalProjWidget(PyGlassWidget):
         cmds.setKeyframe(selectedAlien+".blendParent1", t=lastKeyTime+1, v=0)
 
         #-------Key the Active attribute to be on----
-        cmds.setKeyframe(selRB, attribute='act', t=lastKeyTime, v=0)
-        cmds.setKeyframe(selRB, attribute='act', t=lastKeyTime+1, v=1)
+        #cmds.setKeyframe(selRB, attribute='act', t=lastKeyTime, v=0)
+        #cmds.setKeyframe(selRB, attribute='act', t=lastKeyTime+1, v=1)
 
         #cmds.setKeyframe(constraintNode+"."+selectedAlien+"LocW1", t=lastKeyTime+6, v=0)
         #cmds.setAttr(constraintNode+"."+selectedAlien+"LocW1", 0)
@@ -150,31 +150,38 @@ class FinalProjWidget(PyGlassWidget):
             #----Grab selected alien's name
             selectedAlien = cmds.ls(selection=True)[0]
             #------Get the alien's rigidBody name
-            selRB = cmds.listRelatives(selectedAlien, s=True)[0]
+            #selRB = cmds.listRelatives(selectedAlien, s=True)[0]
 
             #-------Key the Active attribute to be off----
-            cmds.setKeyframe(selRB, attribute='act', t=lastKeyTime-1, v=1)
-            cmds.setKeyframe(selRB, attribute='act', t=lastKeyTime, v=0)
+            #cmds.setKeyframe(selRB, attribute='act', t=lastKeyTime-1, v=1)
+            #cmds.setKeyframe(selRB, attribute='act', t=lastKeyTime, v=0)
 
             #----Create a locator where the alien is----
             existingAlienLoc = cmds.ls(selectedAlien+"Loc")
             alienLoc = selectedAlien+"Loc"
+            alienPos = cmds.xform(selectedAlien, q=1, ws=1, t=1)
             if existingAlienLoc == []:
-                alienPos = cmds.xform(selectedAlien, q=1, ws=1, t=1)
                 cmds.spaceLocator(n=alienLoc)
                 cmds.move(alienPos[0], alienPos[1], alienPos[2], alienLoc)
+
+            #---------------------------------------------------------
+            #-------Check to see if parent relationship already exists.
+            #---------------------------------------------------------
+            #-----get the constraint node name
+            transform = selectedAlien
+            constraintNode = cmds.listConnections('%s.rotateOrder' % transform, source=True)[0]
+
+            clawParentExists = cmds.attributeQuery("clawBaseW0", node = constraintNode, exists = True)
 
             #----PARENT the alien to the claw.
             cmds.parentConstraint('clawBase', selectedAlien, mo=True)
             #----PARENT the alien to the locator.
-            cmds.parentConstraint(alienLoc, selectedAlien)
+            cmds.parentConstraint(alienLoc, selectedAlien, mo=True)
 
             #---move the claw back, as we want it to start at the top. This was just for parenting purposes
             cmds.setAttr('claw.translateY', 345)
 
-            #-----get the constraint node name
-            transform = selectedAlien
-            constraintNode = cmds.listConnections('%s.rotateOrder' % transform, source=True)[0]
+
             if not cmds.nodeType(constraintNode) == 'parentConstraint':
                 raise RuntimeError('Node %s is not of type constraint' % constraintNode)
             cmds.setKeyframe(constraintNode+".clawBaseW0", t=lastKeyTime, v=0)

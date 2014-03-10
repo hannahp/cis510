@@ -12,12 +12,12 @@ import nimble
 
 from nimble import cmds
 
-MAX_DIST = 430
+MAX_DIST = 400
 
 def spawnAliens(num_aliens):
     #----------------------Generate X-amount of aliens-------------------
     #---make gravity field if it doesn't already exist
-    gravName = cmds.ls( 'alienGrav*', sl=True )
+    gravName = cmds.ls( 'alienGrav*' )
     print gravName
     if gravName == []:
         print "make grav"
@@ -31,9 +31,9 @@ def spawnAliens(num_aliens):
         cmds.duplicate('alien', n=curName)
 
         #---Place in random location
-        cmds.setAttr(curName+".translateX", random.randrange(MAX_DIST))
+        cmds.setAttr(curName+".translateX", random.randrange(-MAX_DIST, MAX_DIST))
         cmds.setAttr(curName+".translateY", 200)
-        cmds.setAttr(curName+".translateZ", random.randrange(MAX_DIST))
+        cmds.setAttr(curName+".translateZ", random.randrange(-MAX_DIST, MAX_DIST))
 
         #Random orientation
         cmds.setAttr(curName+".rotateX", random.randrange(360))
