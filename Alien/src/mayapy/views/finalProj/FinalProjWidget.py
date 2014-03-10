@@ -102,8 +102,6 @@ class FinalProjWidget(PyGlassWidget):
         #cmds.setKeyframe(selRB, attribute='act', t=lastKeyTime, v=0)
         #cmds.setKeyframe(selRB, attribute='act', t=lastKeyTime+1, v=1)
 
-        #cmds.setKeyframe(constraintNode+"."+selectedAlien+"LocW1", t=lastKeyTime+6, v=0)
-        #cmds.setAttr(constraintNode+"."+selectedAlien+"LocW1", 0)
 #___________________________________________________________________________________________________ _handleDrop Claw
     #------drop the claw
     def _handleDropClaw(self):
@@ -167,23 +165,29 @@ class FinalProjWidget(PyGlassWidget):
             #---------------------------------------------------------
             #-------Check to see if parent relationship already exists.
             #---------------------------------------------------------
-            #-----get the constraint node name
-            transform = selectedAlien
-            constraintNode = cmds.listConnections('%s.rotateOrder' % transform, source=True)[0]
 
-            clawParentExists = cmds.attributeQuery("clawBaseW0", node = constraintNode, exists = True)
+            clawParent = cmds.ls(selectedAlien+"_parent*", type='constraint')
 
-            #----PARENT the alien to the claw.
-            cmds.parentConstraint('clawBase', selectedAlien, mo=True)
-            #----PARENT the alien to the locator.
-            cmds.parentConstraint(alienLoc, selectedAlien, mo=True)
+            #----If no parent yet, make one------
+            if clawParent == []:
+                #----PARENT the alien to the claw.
+                cmds.parentConstraint('clawBase', selectedAlien, mo=True)
+                #----PARENT the alien to the locator.
+                cmds.parentConstraint(alienLoc, selectedAlien, mo=True)
 
             #---move the claw back, as we want it to start at the top. This was just for parenting purposes
             cmds.setAttr('claw.translateY', 345)
 
-
+            #-----get the constraint node name
+            transform = selectedAlien
+            constraintNode = cmds.listConnections('%s.rotateOrder' % transform, source=True)[0]
             if not cmds.nodeType(constraintNode) == 'parentConstraint':
                 raise RuntimeError('Node %s is not of type constraint' % constraintNode)
+
+            #---Keyframe the blend parent
+            cmds.setKeyframe(selectedAlien+".blendParent1", t=lastKeyTime, v=0)
+            cmds.setKeyframe(selectedAlien+".blendParent1", t=lastKeyTime+1, v=1)
+            #---Keyframe the swap between the weights of the two parents
             cmds.setKeyframe(constraintNode+".clawBaseW0", t=lastKeyTime, v=0)
             cmds.setKeyframe(constraintNode+".clawBaseW0", t=lastKeyTime+1, v=1)
             cmds.setKeyframe(constraintNode+"."+alienLoc+"W1", t=lastKeyTime, v=1)
