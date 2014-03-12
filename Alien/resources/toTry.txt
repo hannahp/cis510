@@ -5,3 +5,17 @@
 5. Key the swap of weights
 6. Key the blend parent
 7. key the active state
+
+
+94.503
+159.33
+-0.545
+
+
+95.007
+159.334
+2.267
+
+95.366
+159.716
+0
