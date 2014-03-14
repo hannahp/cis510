@@ -66,7 +66,7 @@ class FinalProjWidget(PyGlassWidget):
             #---initial keyframe
             cmds.setKeyframe(fingerName+"Group|"+fingerName+"Joint", attribute='rotateZ', t=lastKeyTime)
             #----After 1.5 seconds, rotate finger to -70 Z
-            cmds.setKeyframe(fingerName+"Group|"+fingerName+"Joint", attribute='rotateZ', t=lastKeyTime+36, v=40)
+            cmds.setKeyframe(fingerName+"Group|"+fingerName+"Joint", attribute='rotateZ', t=lastKeyTime+36, v=0)
 
 #___________________________________________________________________________________________________ _handleDrop Claw
     #------drop the claw
